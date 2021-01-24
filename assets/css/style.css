@@ -1,14 +1,28 @@
+body {
+    background-image: url("/assets/images/feltTabletop.png");
+}
+
+#cards-left {
+    margin-right: 50px;
+}
+
 button#playGame.button.column, button#gameRules.button.column {
     height: 50px;
     width: 100px;
     margin-top: 15px;
 }
 
+button#gameRules.button.column {
+    margin-right: 150px;
+}
+
 #main{
  margin-top: 150px;
+ padding-left: 100px;
 }
 
 #P1, #P2, #P3, #P4, #P5, #C1, #C2, #C3, #C4, #C5 {
     background-image: url("/assets/images/cardBack.png");
     background-size: cover;
+    border-radius: 5px;
 }
