@@ -1,0 +1,9 @@
+button#playGame.button.column, button#gameRules.button.column {
+    height: 50px;
+    width: 100px;
+    margin-top: 15px;
+}
+
+#main{
+ margin-top: 150px;
+}

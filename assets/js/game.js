@@ -50,8 +50,8 @@ $(document).on("click",".image",function(event){
 $("#playGame").on("click",function(event){
     event.preventDefault();
     var gameDiv = $("<div>");
-    var playerDiv = $("<div>");
-    var computerDiv = $("<div>");
+    var playerDiv = $("<div>").addClass("playerDiv");
+    var computerDiv = $("<div>").addClass("computerDiv");
     computerDiv.attr("id","computerDiv");
 
     for(var i=1;i<=5;i++){
@@ -77,7 +77,7 @@ $("#playGame").on("click",function(event){
     gameDiv.append(playerDiv);
     gameDiv.append(computerDiv);
 
-    $("#main").append(gameDiv);
+    $("#main").append(gameDiv).addClass("gameDiv");
 })
 
 
