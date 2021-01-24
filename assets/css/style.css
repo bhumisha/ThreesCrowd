@@ -3,7 +3,7 @@ body {
 }
 
 #cards-left {
-    margin-right: 50px;
+    margin-right: 150px;
 }
 
 button#playGame.button.column, button#gameRules.button.column {
@@ -13,7 +13,8 @@ button#playGame.button.column, button#gameRules.button.column {
 }
 
 button#gameRules.button.column {
-    margin-right: 150px;
+    margin-right: 200px;
+    margin-left: 5px;
 }
 
 #main{
@@ -24,5 +25,7 @@ button#gameRules.button.column {
 #P1, #P2, #P3, #P4, #P5, #C1, #C2, #C3, #C4, #C5 {
     background-image: url("/assets/images/cardBack.png");
     background-size: cover;
-    border-radius: 5px;
+    background-position: center;
+    border-radius: 10px;
+    margin-left: 10px;
 }
