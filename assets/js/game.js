@@ -21,7 +21,6 @@ $(document).on("click",".image",function(event){
     event.preventDefault();
     if(deckID!="")
     {
-        debugger;
         var selectedImageEl = $(this);
         var selectedIndexEl =  $(this).attr("index");
         if($(this).attr("imageFound")==="false"){
@@ -47,11 +46,11 @@ $(document).on("click",".image",function(event){
     
 })
 
-$("#playGame").on("click",function(event){
+var play = function(event) {
     event.preventDefault();
     var gameDiv = $("<div>");
-    var playerDiv = $("<div>");
-    var computerDiv = $("<div>");
+    var playerDiv = $("<div>").addClass("playerDiv");
+    var computerDiv = $("<div>").addClass("computerDiv");
     computerDiv.attr("id","computerDiv");
 
     for(var i=1;i<=5;i++){
@@ -77,14 +76,13 @@ $("#playGame").on("click",function(event){
     gameDiv.append(playerDiv);
     gameDiv.append(computerDiv);
 
-    $("#main").append(gameDiv);
-})
+    $("#main").append(gameDiv).addClass("gameDiv");
+};
 
-
+$("#playGame").on("click", play);
 
 function loadCardToPlayerPanel(data,selectedImageEl){
     if(data){
-        debugger;  
         var playerClickedImageEl = $("#P"+selectedImageEl);
         playerClickedImageEl.attr("src",data.cards[0].image)
         playerClickedImageEl.attr("imageFound",true);
@@ -94,7 +92,6 @@ function loadCardToPlayerPanel(data,selectedImageEl){
 
 function loadCardToComputerPanel(data,selectedImageEl){
     if(data){
-        debugger;
         var computerDiv = $("#computerDiv");    
         var computerImageEl = $("#C"+selectedImageEl);
         computerImageEl.attr("src",data.cards[1].image);
@@ -110,3 +107,59 @@ function storeResultToLocalStorage(){
 function loadResultFromLocalStorage(){
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$('#gameRules').on("click", function(event) {
+    $('#rules-modal').modal('show');
+    $('#playGameModal').on("click", play);
+});
