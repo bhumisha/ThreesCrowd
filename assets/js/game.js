@@ -45,14 +45,11 @@ $(document).on("click",".image",function(event){
     
 })
 
-$("#playGame").on("click",function(event){
+var play = function(event) {
     event.preventDefault();
     var gameDiv = $("<div>");
-    var playerDiv = $("<div>");
-    playerDiv.attr("id","playerDiv");
-    var computerDiv = $("<div>");
     computerDiv.attr("id","computerDiv");
-
+    playerDiv.attr("id","playerDiv");
     for(var i=1;i<=5;i++){
         var imgPlayerEl = $("<img>");
         imgPlayerEl.attr("id","P"+i);
@@ -76,10 +73,10 @@ $("#playGame").on("click",function(event){
     gameDiv.append(playerDiv);
     gameDiv.append(computerDiv);
 
-    $("#main").append(gameDiv);
-})
+    $("#main").append(gameDiv).addClass("gameDiv");
+};
 
-
+$("#playGame").on("click", play);
 
 function loadCardToPlayerPanel(data,selectedImageEl){
     if(data){
@@ -99,6 +96,7 @@ function loadCardToPlayerPanel(data,selectedImageEl){
 
 function loadCardToComputerPanel(data,selectedImageEl){
     if(data){
+  
         var computerImageEl = $("#C"+selectedImageEl);
         computerImageEl.attr("src",data.cards[1].image);
         computerImageEl.attr("imageFound",true);
@@ -129,3 +127,59 @@ function storeResultToLocalStorage(){
 function loadResultFromLocalStorage(){
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$('#gameRules').on("click", function(event) {
+    $('#rules-modal').modal('show');
+    $('#playGameModal').on("click", play);
+});
