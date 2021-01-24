@@ -48,6 +48,8 @@ $(document).on("click",".image",function(event){
 var play = function(event) {
     event.preventDefault();
     var gameDiv = $("<div>");
+    var playerDiv = $("<div>").addClass("playerDiv");
+    var computerDiv = $("<div>").addClass("computerDiv");
     computerDiv.attr("id","computerDiv");
     playerDiv.attr("id","playerDiv");
     for(var i=1;i<=5;i++){
