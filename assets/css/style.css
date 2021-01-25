@@ -3,6 +3,24 @@ body {
 }
 
 #cards-right, #cards-left {
+    display:flex;
+    flex: 1;
+}
+
+header {
+    display: flex;
+    flex: 1;
+}
+
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 25px;
+    display: flex;
+    flex: 1;
+}
+
+#cards-left, #cards-right {
+    display: flex;
     flex: 1;
     overflow: hidden;
 }
@@ -15,6 +33,10 @@ header {
     display: flex;
 }
 
+button#playGame.button.column {
+    margin-left: 40px;
+}
+
 button#playGame.button.column, button#gameRules.button.column {
     height: 50px;
     width: 100px;
@@ -23,12 +45,8 @@ button#playGame.button.column, button#gameRules.button.column {
     flex: 1;
 }
 
-button#playGame.button.column {
-    margin-left: 25px;
-}
-
 button#gameRules.button.column {
-    margin-right: 130px;
+    margin-right: 100px;
     margin-left: 5px;
 }
 
