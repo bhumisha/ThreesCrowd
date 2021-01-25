@@ -19,7 +19,7 @@
 
 </head>
 
-<body class="">
+<body>
   <header>
   <div class="ui fixed borderless huge menu">
     <div class="ui container grid">
@@ -36,7 +36,7 @@
 
 
 
-  <main id="main" class=""> 
+  <main id="main" > 
        
   </main>
 
@@ -61,7 +61,20 @@
           <button type="button" class="ui approve button" id="playGameModal">Play!</button>
         </div>
   </div>
-
+  <div class="ui tiny modal" id="playerName-modal">
+    <div class="header">
+      <h2 id="player-modal">Three's A Crowd!</h2>
+    </div>
+    <div class="content">
+          <h3>Enter Your Name</h3>
+          <div class="ui input">
+            <input type="text" id="playerName" placeholder="Player's Name"/>
+          </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="ui approve button" id="GoModalButtonEl">Go!</button>
+    </div>
+</div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="./assets/js/game.js"></script>
