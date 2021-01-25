@@ -1,5 +1,5 @@
 body {
-    background-image: url("/assets/images/feltTabletop.png");
+    background-image: url("../images/feltTabletop.png");
 }
 
 #cards-right, #cards-left {
@@ -64,7 +64,7 @@ h1 {
 }
 
 #P1, #P2, #P3, #P4, #P5, #C1, #C2, #C3, #C4, #C5 {
-    background-image: url("/assets/images/cardBack.png");
+    background-image: url("../images/cardBack.png");
     background-size: cover;
     background-position: center;
     border-radius: 10px;

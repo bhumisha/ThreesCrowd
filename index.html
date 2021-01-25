@@ -8,23 +8,14 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" />
-<<<<<<< HEAD
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-=======
-  
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">   
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="stylesheet" href="./assets/css/style.css">
-
-
->>>>>>> 601d399b007827399e0a79697ded269c76b533f0
   <link rel="stylesheet" href="./assets/css/style.css" />
   <title>Three's A Crowd</title>
 
 </head>
 
-<body class="">
+<body>
   <header>
   <div class="ui fixed borderless huge menu">
     <div class="ui container grid">
@@ -41,7 +32,7 @@
 
 
 
-  <main id="main" class=""> 
+  <main id="main" > 
        
   </main>
 
@@ -66,7 +57,20 @@
           <button type="button" class="ui approve button" id="playGameModal">Play!</button>
         </div>
   </div>
-
+  <div class="ui tiny modal" id="playerName-modal">
+    <div class="header">
+      <h2 id="player-modal">Three's A Crowd!</h2>
+    </div>
+    <div class="content">
+          <h3>Enter Your Name</h3>
+          <div class="ui input">
+            <input type="text" id="playerName" placeholder="Player's Name"/>
+          </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="ui approve button" id="GoModalButtonEl">Go!</button>
+    </div>
+</div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="./assets/js/game.js"></script>
