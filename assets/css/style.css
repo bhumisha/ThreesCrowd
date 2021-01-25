@@ -2,18 +2,42 @@ body {
     background-image: url("/assets/images/feltTabletop.png");
 }
 
+header {
+    display: flex;
+    flex: 1;
+}
+
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 25px;
+    display: flex;
+    flex: 1;
+}
+
+#cards-left, #cards-right {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
 #cards-left {
-    margin-right: 150px;
+    margin-right: 50px;
+}
+
+button#playGame.button.column {
+    margin-left: 40px;
 }
 
 button#playGame.button.column, button#gameRules.button.column {
     height: 50px;
     width: 100px;
     margin-top: 15px;
+    display: flex;
+    flex: 1;
 }
 
 button#gameRules.button.column {
-    margin-right: 200px;
+    margin-right: 100px;
     margin-left: 5px;
 }
 
