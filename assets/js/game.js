@@ -1,7 +1,11 @@
+//Global Variables
 var deckID = '';
 var playerNameGlobalVar = '';
 var gameRounds = 0;
-getDeckOfCards();
+
+$("#playGame").on("click", playGameMenuItemClick);
+
+//Get the Deck of Card and with its DeckId
 function getDeckOfCards(){
     fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
     .then(function(response){
@@ -17,8 +21,7 @@ function getDeckOfCards(){
 
     })
 }
-
-
+//It is card images clicks and api call for fetch any two cards from selected deck id.
 $(document).on("click",".image",function(event){
     event.preventDefault();
     if(deckID!="")
@@ -32,115 +35,81 @@ $(document).on("click",".image",function(event){
                     .then(function(data){
                         console.log(data);
                         loadCardToPlayerPanel(data,selectedIndexEl);
-                       // loadCardToComputerPanel(data,selectedIndexEl);
                     })
                 }
             })
             .catch(function(error){
             })
-        }
-        else{
-
-        }
-        
+        }        
     }
     
 })
+//This is all global variable , get reset when user click on play game.
 function resetAllVariables(){
     gameRounds = 0;
     playerNameGlobalVar = '';
     getDeckOfCards();
 }
-var play = function(event) {
-    resetAllVariables()
-    $("#main").text('');
-    $('#playerName-modal').modal('show');
-    $('#GoModalButtonEl').on("click", savePlayersInfoToLocalStorage);
-    generateGameCanvas();
-};
 
-$("#playGame").on("click", play);
+//Play Menu Button Click
+function playGameMenuItemClick(){
+    //Reset all global variable.
+    resetAllVariables()
+    //Get the playerName information.
+    $('#playerName-modal').modal('show');
+    $('#goModalButtonEl').on("click", storePlayersInfoToLocalStorage);
+    generateGameCanvas();
+}
+
 
 function generateGameCanvas(){
     $("#main").text('');
-
+    //Till Game Rounds 5 Image panel will be there .. else final result.
     if(gameRounds < 5){
 
+        var gameDiv = $("<div>")
+
+        var playerDiv = $("<div>").addClass("playerDiv");
+        playerDiv.attr("id","playerDiv");
+
+        var playerDivHeadingEl = $("<h3>").addClass("ui left aligned yellow header");
+        playerDivHeadingEl.attr("id","playerDivHeadingEl");
+        playerDivHeadingEl.text(playerNameGlobalVar);
+        playerDiv.append(playerDivHeadingEl);
+        
+        var computerDiv = $("<div>").addClass("computerDiv");
+        computerDiv.attr("id","computerDiv");
+        
+        var computerDivHeadingEl = $("<h3>").addClass("ui left aligned yellow header");;
+        computerDivHeadingEl.text("Computer");
+        computerDiv.append(computerDivHeadingEl)
     
-    var gameDiv = $("<div>");
+        for(var i=1;i<=5;i++){
+            var imgPlayerEl = $("<img>")
+            imgPlayerEl.attr("id","P"+i);
+            imgPlayerEl.attr("index",i);
+            imgPlayerEl.attr("imageFound",false);
+            imgPlayerEl.addClass("image");
+           
 
-    var playerDiv = $("<div>").addClass("playerDiv");
-    var playerDivHeadingEl = $("<h4>").addClass("ui yellow header");
-    playerDiv.attr("id","playerDiv");
-    
-    playerDivHeadingEl.attr("id","playerDivHeadingEl");
-    playerDivHeadingEl.text(playerNameGlobalVar);
-    playerDiv.append(playerDivHeadingEl);
-    
-    var computerDiv = $("<div>").addClass("computerDiv");
-    var computerDivHeadingEl = $("<h4>").addClass("ui yellow header");;
-    computerDiv.attr("id","computerDiv");
-    computerDivHeadingEl.text("Computer");
-    computerDiv.append(computerDivHeadingEl)
-   
-    for(var i=1;i<=5;i++){
-        var imgPlayerEl = $("<img>").addClass("five wide column");
-        imgPlayerEl.attr("id","P"+i);
-        imgPlayerEl.attr("index",i);
-        imgPlayerEl.attr("imageFound",false);
-        imgPlayerEl.addClass("image");
-        imgPlayerEl.attr("width","180px")
-        imgPlayerEl.attr("height","270px")
-
-        var imgComputerEl = $("<img>").addClass("five wide column");
-        imgComputerEl.attr("id","C"+i);
-        imgComputerEl.attr("index",i);
-        imgComputerEl.attr("imageFound",false);
-        imgComputerEl.addClass("image");
-        imgComputerEl.attr("width","180px")
-        imgComputerEl.attr("height","270px")
-
-        playerDiv.append(imgPlayerEl);
-        computerDiv.append(imgComputerEl);
-    }
-    gameDiv.append(playerDiv);
-    gameDiv.append(computerDiv);
-
-
-    $("#main").append(gameDiv);
+            var imgComputerEl = $("<img>");
+            imgComputerEl.attr("id","C"+i);
+            imgComputerEl.attr("index",i);
+            imgComputerEl.attr("imageFound",false);
+            imgComputerEl.addClass("image");
+           
+            playerDiv.append(imgPlayerEl);
+            computerDiv.append(imgComputerEl);
+        }
+        gameDiv.append(playerDiv);
+        gameDiv.append(computerDiv);
+        $("#main").append(gameDiv);
     }
     else{
         finalResultAfterGameComplete();
     }
 }
-function savePlayersInfoToLocalStorage(){
-    var playersList = JSON.parse(localStorage.getItem("playersList")) || [];
-        var playerName = $("#playerName").val().trim();
-        playerNameGlobalVar = playerName;
-        $("#playerDivHeadingEl").text(playerName);
-        var isPlayerExist = false;
-        if(playerName!=""){
-            for(var i=0;i<playersList.length;i++)
-            {
-                var playerDetail = playersList[i];
-                if(playerName === playerDetail.name){
-                    isPlayerExist = true;
-                }
-            }
-            if(!isPlayerExist){
-                var player = { name : playerName, 
-                               win : 0,
-                               loose : 0,
-                               game : 0}
-                playersList.push(player);
-                
-                localStorage.setItem('playersList',JSON.stringify(playersList));
-                
-               // $("#playerName").val('');
-                
-            }
-        }
-}
+
 function loadCardToPlayerPanel(data,selectedImageEl){
     if(data){
         var playerClickedImageEl = $("#P"+selectedImageEl);
@@ -161,26 +130,26 @@ function loadCardToPlayerPanel(data,selectedImageEl){
     if((checkWinner("player") && checkWinner("computer")))
     {
         $(".image").prop("disabled",true);
-        loadLooserDiv($("#playerDivHeadingEl").text(),true,"draw");
-        updatePlayersResultToLocalStorage($("#playerDivHeadingEl").text(),"draw",false);
+        loadLooserDiv(playerNameGlobalVar,true,"draw");
+        updatePlayersResultToLocalStorage(playerNameGlobalVar,"draw",false);
     }
     else if(checkWinner("player"))
     {
         $(".image").prop("disabled",true);
-        loadWinnerDiv($("#playerDivHeadingEl").text());
-        updatePlayersResultToLocalStorage($("#playerDivHeadingEl").text(),"win",true);
+        loadWinnerDiv(playerNameGlobalVar);
+        updatePlayersResultToLocalStorage(playerNameGlobalVar,"win",true);
     }
     else if(checkWinner("computer"))
     {
         $(".image").prop("disabled",true);
-        loadLooserDiv($("#playerDivHeadingEl").text(),false,"loose");
-        updatePlayersResultToLocalStorage($("#playerDivHeadingEl").text(),"loose",false);
+        loadLooserDiv(playerNameGlobalVar,false,"loose");
+        updatePlayersResultToLocalStorage(playerNameGlobalVar,"loose",false);
     }
     if(checkForStalemate("player","computer"))
     {
         $(".image").prop("disabled",true);
-        loadLooserDiv($("#playerDivHeadingEl").text(),true,"stalemate");
-        updatePlayersResultToLocalStorage($("#playerDivHeadingEl").text(),"stalemate",false);
+        loadLooserDiv(playerNameGlobalVar,true,"stalemate");
+        updatePlayersResultToLocalStorage(playerNameGlobalVar,"stalemate",false);
     }
 
 }
@@ -215,45 +184,11 @@ function checkForStalemate(playerDiv, computerDiv){
     var isComputerWon = false;
     //Get all image controls of Player or computer
     if(imageControls && imageControls.length === 5 && imageComputerControls && imageComputerControls.length ===5 ){
-            var clubs=0;
-            var diamonds=0;
-            var hearts=0;
-            var spades=0;
-            for(var i=0;i<imageControls.length ;i++){
-                    var suit = $(imageControls[i]).attr("cardSuit").toLowerCase();
-                    if(suit === "clubs"){clubs++;}
-                    if(suit === "diamonds"){diamonds++;}
-                    if(suit === "hearts"){hearts++;}
-                    if(suit === "spades"){spades++;}
-            }
-            //If Player has any card more than 3 than he might be winner
-            if(clubs >=3 || diamonds >=3 || hearts >=3 || spades>=3 ){
-                isPlayerWon= true;
-            }
-            else{
-                isPlayerWon= false;
-            }
-            //Computer panel card images
-            var clubs=0;
-            var diamonds=0;
-            var hearts=0;
-            var spades=0;
-            for(var i=0;i<imageComputerControls.length ;i++){
-                var suit = $(imageComputerControls[i]).attr("cardSuit").toLowerCase();
-                if(suit === "clubs"){clubs++;}
-                if(suit === "diamonds"){diamonds++;}
-                if(suit === "hearts"){hearts++;}
-                if(suit === "spades"){spades++;}
-        }
-        //If Computer has any card more than 3 than he might be winner
-        if(clubs >=3 || diamonds >=3 || hearts >=3 || spades>=3 ){
-            isComputerWon = true;
-        }
-        else{
-            isComputerWon = false;
-        }
+            isPlayerWon = checkWinner(playerDiv);
+            isComputerWon =  checkWinner(computerDiv);
+            
         if(!isPlayerWon && !isComputerWon){
-            return true
+            return true;
         }
         return false;
     }
@@ -261,8 +196,8 @@ function checkForStalemate(playerDiv, computerDiv){
 function loadWinnerDiv(winner){
     $(".result").remove();
     
-    var winnerDivEl = $("<div>").addClass("result");
-    var winnerName = $("<h4>").addClass("ui yellow header");
+    var winnerDivEl = $("<div>").addClass("result middle aligned three wide column");
+    var winnerName = $("<h3>").addClass("ui yellow header");
     
     var nextRound = $("<button>");
     nextRound.addClass("ui button green");
@@ -279,18 +214,19 @@ function loadWinnerDiv(winner){
     var winImageDiv =$("<div>")
     winnerName.text("Yay! " + winner + "  Won!!")
     winnerDivEl.append(winnerName);
-    winnerDivEl.append(nextRound);
     winImageDiv.append(winImage);
+    winnerDivEl.append(nextRound);
+    
     winnerDivEl.append(winImageDiv);
     $("#main").append(winnerDivEl);
 }
 
 function loadLooserDiv(looser,isGameDraw,gameResult){
     $(".result").remove();
-    var looserDivEl = $("<div>").addClass("result");
-    var looserName = $("<h4>").addClass("ui yellow header");
-    
+    var looserDivEl = $("<div>").addClass("result middle aligned three wide column");
+    var looserName = $("<h3>").addClass("ui yellow header");
     var nextRound = $("<button>");
+    
     nextRound.addClass("ui button green");
     if(gameRounds===4){
         nextRound.text("Final Result");
@@ -311,7 +247,7 @@ function loadLooserDiv(looser,isGameDraw,gameResult){
     }
   
     else{
-        looserName.text("Awww! " + looser + "  Better luck next time!!")
+        looserName.text(looser + "!  Better luck next time!!")
     }
     
     looserDivEl.append(looserName);
@@ -324,7 +260,35 @@ $(document).on("click","#nextRoundButtonClick",function(event){
     generateGameCanvas();
 });
 
+/***************START LOCALSTORAGE FUNCTIONS **************/
+//Store Players information with initial values of game.
+function storePlayersInfoToLocalStorage(){
+        var playerName = $("#playerName").val().trim();
+        playerNameGlobalVar = playerName;
+        $("#playerDivHeadingEl").text(playerName);
+        
+        var playersList = JSON.parse(localStorage.getItem("playersList")) || [];
+        var isPlayerExist = false;
+        if(playerName!=""){
+            for(var i=0;i<playersList.length;i++)
+            {
+                var playerDetail = playersList[i];
+                if(playerName === playerDetail.name){
+                    isPlayerExist = true;
+                }
+            }
+            if(!isPlayerExist){
+                var player = { name : playerName, 
+                               win : 0,
+                               loose : 0,
+                               game : 0}
+                playersList.push(player);
+                localStorage.setItem('playersList',JSON.stringify(playersList));
+            }
+        }
+}
 
+//update current player score after each game
 function updatePlayersResultToLocalStorage(playerName,gameResult,isWon){
     var playersList = JSON.parse(localStorage.getItem("playersList")) || [];
         
@@ -345,25 +309,9 @@ function updatePlayersResultToLocalStorage(playerName,gameResult,isWon){
                 }
             }      
             localStorage.setItem('playersList',JSON.stringify(playersList));
-                
-            $("#playerName").val('');
         }
 }
-
-$('#gameRules').on("click", function(event) {
-    $('#rules-modal').modal('show');
-    $('#playGameModal').on("click", ruleButton_Click);
-});
-
-function ruleButton_Click(){
-    if($("#playerDivHeadingEl").text().trim()===""){
-      play();
-    }
-    else {
-        $('#rules-modal').modal('hide');
-    }
-}
-
+//Final Result panel - Used Cards to show current player details.
 function finalResultAfterGameComplete(){
     var finalResultIUICardDiv = $("<div>").addClass("ui cards");
     var cardDivEl =  $("<div>").addClass("card");
@@ -390,4 +338,18 @@ function finalResultAfterGameComplete(){
         }
         finalResultIUICardDiv.append(cardDivEl);
         $("#main").append(finalResultIUICardDiv);
+}
+/***************STOP LOCALSTORAGE FUNCTIONS **************/
+$('#gameRules').on("click", function(event) {
+    $('#rules-modal').modal('show');
+    $('#playGameModal').on("click", ruleButton_Click);
+});
+
+function ruleButton_Click(){
+    if(playerNameGlobalVar===""){
+        playGameMenuItemClick();
+    }
+    else {
+        $('#rules-modal').modal('hide');
+    }
 }
