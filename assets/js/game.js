@@ -341,7 +341,6 @@ function finalResultAfterGameComplete(){
 }
 
 function createList() {
-    var highScoreDiv = $("div").addClass("ui three stackable cards");
     var scoreDivEl = $("<div>").addClass("card");
     var scoreContentEl = $("<div>").addClass("content");
     var scoreHeaderEl = $("<div>").addClass("header");
@@ -352,11 +351,11 @@ function createList() {
     if(playerNameGlobalVar!=""){
         for(var i=0; i < playersList.length; i++) {
             var playerDetail = playerslist[i];
-            var playerWinPect = playerDetail.win/playerDetail.game;
+            var playerWinPect = (playerDetail.win/playerDetail.game).toFixed(2);
             console.log(playerWinPect);
             if(playerNameGlobalVar === playerDetail.name){
                 scoreHeaderEl.text(platerNameGlobalVar);
-                // scoreCardDescEl.html("<p>" + playerDetail.win + "/" + playerDetail.loss + "=" playerWinPect);
+                scoreCardDescEl.html("<p>" + playerDetail.win + "/" + playerDetail.loss + "=" JSON.parse(playerWinPect));
                 scoreContentEl.append(scoreHeaderEl);
                 scoreContentEl.append(scoreCardDescEl);
                 scoreDivEl.append(scoreContentEl);
@@ -364,8 +363,7 @@ function createList() {
             }
         }
     }
-    highScoreDiv.append(scoreDivEl);
-    $("#highScores").append(highScoreDiv);
+    $("#high"+[i]).append(scoreDivEl);
 }
 
 /***************STOP LOCALSTORAGE FUNCTIONS **************/
