@@ -16,29 +16,29 @@
 </head>
 
 <body>
+  <!-- header part of the browser -->
   <header>
   <div class="ui fixed borderless huge menu">
     <div class="ui container grid">
       <div class="computer only row">
         <img src="./assets/images/playing-card.svg" id="cards-left" class="ui small image">
         <h1 class="header item ">Three's a Crowd</h1>
-        <button id="playGame" class="button item borderless green column">Play</button>
-        <button id="gameRules" class="button item borderless green column">Rules</button>
+        <button id="playGame" class="ui green button column">Play</button>
+        <button id="gameRules" class="ui green button column">Rules</button>
         <img src="./assets/images/playing-card.svg" id="cards-right" class="ui small image">
       </div>
     </div>
   </div>
   </header>
 
-
-
-  <main id="main" > 
-       
+  
+  <main id="main" class="ui centered grid" > 
+  
   </main>
 
   <!-- Modal -->
   <div class="ui small modal" id="rules-modal">
-    <i class="close icon"></i>
+    <!-- <i class="close icon"></i> -->
         <div class="header">
           <h1 id="rules-modal">Welcome to Three's A Crowd!</h1>
         </div>
@@ -53,10 +53,11 @@
               </p>            
         </div>
         <div class="actions">
-          <button type="button" class="ui cancel button">Close</button>
-          <button type="button" class="ui approve button" id="playGameModal">Play!</button>
+          <!-- <button type="button" class="ui cancel button">Close</button> -->
+          <button type="button" class="ui cancel button" id="playGameModal">Let's Play!</button>
         </div>
   </div>
+  <!-- Player's Info Model-->
   <div class="ui tiny modal" id="playerName-modal">
     <div class="header">
       <h2 id="player-modal">Three's A Crowd!</h2>
@@ -68,7 +69,7 @@
           </div>
     </div>
     <div class="actions">
-      <button type="button" class="ui approve button" id="GoModalButtonEl">Go!</button>
+      <button type="button" class="ui approve button" id="goModalButtonEl">Go!</button>
     </div>
 </div>
 

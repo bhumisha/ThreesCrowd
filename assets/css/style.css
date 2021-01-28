@@ -29,44 +29,57 @@ h1 {
     margin-right: 50px;
 }
 
-header {
-    display: flex;
+div{
+    padding-top: 10px;
 }
 
-button#playGame.button.column {
-    margin-left: 40px;
-}
 
-button#playGame.button.column, button#gameRules.button.column {
+#playGame,#gameRules {
     height: 50px;
     width: 100px;
-    margin-top: 15px;
-    display: flex;
-    flex: 1;
+    align-self: center;
 }
-
-button#gameRules.button.column {
+#playGame{
+    margin-left: 40px;
+}
+#gameRules {
     margin-right: 100px;
     margin-left: 5px;
 }
 
-h1 {
-    display: flex;
-    flex: 1;
-    font-family: 'Press Start 2p', cursive;
-    font-size: 25px;
-    flex: 1;
+#playGame:hover,#gameRules:hover{
+    font-size: 20px;
+    transition: all .3s ease-in-out;
 }
 
 #main{
  margin-top: 150px;
- padding-left: 100px;
+ display: flex;
 }
 
-#P1, #P2, #P3, #P4, #P5, #C1, #C2, #C3, #C4, #C5 {
+.image {
     background-image: url("../images/cardBack.png");
     background-size: cover;
     background-position: center;
+    margin: 10px;
+    width: 180px;
+    height: 270px;
     border-radius: 10px;
-    margin-left: 10px;
+    cursor: pointer;
+   
+}
+
+
+.result{
+    display: flow-root;
+    border: solid;
+    border-color: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 15px;
+    height:auto
+}
+ 
+.winImage{
+    src: url("https://s3.amazonaws.com/course_creation_production/v2_yes_no_quiz_questions/follow_up_images/000/002/084/original/Owl1.gif?1436567941");
 }
