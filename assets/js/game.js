@@ -355,7 +355,7 @@ function createList() {
             console.log(playerWinPect);
             if(playerNameGlobalVar === playerDetail.name){
                 scoreHeaderEl.text(platerNameGlobalVar);
-                scoreCardDescEl.html("<p>" + playerDetail.win + "/" + playerDetail.loss + "=" JSON.parse(playerWinPect));
+                // scoreCardDescEl.html("<p>" + playerDetail.win + "/" + playerDetail.loss + "=" JSON.parse(playerWinPect));
                 scoreContentEl.append(scoreHeaderEl);
                 scoreContentEl.append(scoreCardDescEl);
                 scoreDivEl.append(scoreContentEl);
@@ -380,3 +380,5 @@ function ruleButton_Click(){
         $('#rules-modal').modal('hide');
     }
 }
+
+createList();
