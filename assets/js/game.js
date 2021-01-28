@@ -339,6 +339,35 @@ function finalResultAfterGameComplete(){
         finalResultIUICardDiv.append(cardDivEl);
         $("#main").append(finalResultIUICardDiv);
 }
+
+function createList() {
+    var highScoreDiv = $("div").addClass("ui three stackable cards");
+    var scoreDivEl = $("<div>").addClass("card");
+    var scoreContentEl = $("<div>").addClass("content");
+    var scoreHeaderEl = $("<div>").addClass("header");
+    var scoreCardDescEl = $("<div>").addClass("description");
+
+    var playersList = JSON.parse(localStorage.getItem("playersList"));
+
+    if(playerNameGlobalVar!=""){
+        for(var i=0; i < playersList.length; i++) {
+            var playerDetail = playerslist[i];
+            var playerWinPect = playerDetail.win/playerDetail.game;
+            console.log(playerWinPect);
+            if(playerNameGlobalVar === playerDetail.name){
+                scoreHeaderEl.text(platerNameGlobalVar);
+                // scoreCardDescEl.html("<p>" + playerDetail.win + "/" + playerDetail.loss + "=" playerWinPect);
+                scoreContentEl.append(scoreHeaderEl);
+                scoreContentEl.append(scoreCardDescEl);
+                scoreDivEl.append(scoreContentEl);
+                break;
+            }
+        }
+    }
+    highScoreDiv.append(scoreDivEl);
+    $("#highScores").append(highScoreDiv);
+}
+
 /***************STOP LOCALSTORAGE FUNCTIONS **************/
 $('#gameRules').on("click", function(event) {
     $('#rules-modal').modal('show');
