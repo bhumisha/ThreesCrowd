@@ -12,7 +12,7 @@ function getDeckOfCards(){
         if (response.ok) {
             response.json()
             .then(function(data){
-                 console.log(data);
+                //  console.log(data);
                 deckID = data.deck_id;
              })
         }
@@ -33,8 +33,9 @@ $(document).on("click",".image",function(event){
                 if (response.ok) {
                     response.json()
                     .then(function(data){
-                        console.log(data);
-                        loadCardToPlayerPanel(data,selectedIndexEl);
+                        // console.log(data);
+                        //Load Card to player and computer panel for selected index..
+                        loadCardToPlayerAndComputerPanel(data,selectedIndexEl);
                     })
                 }
             })
@@ -61,7 +62,7 @@ function playGameMenuItemClick(){
     generateGameCanvas();
 }
 
-
+//Generate Game canvas will create card panel for both player and computer.
 function generateGameCanvas(){
     $("#main").text('');
     //Till Game Rounds 5 Image panel will be there .. else final result.
@@ -105,12 +106,14 @@ function generateGameCanvas(){
         gameDiv.append(computerDiv);
         $("#main").append(gameDiv);
     }
-    else{
+    else{//After 5 round , Current players detail will get display
+
         finalResultAfterGameComplete();
     }
 }
 
-function loadCardToPlayerPanel(data,selectedImageEl){
+// draw api result will load card to player and computer image placeholders.
+function loadCardToPlayerAndComputerPanel(data,selectedImageEl){
     if(data){
         var playerClickedImageEl = $("#P"+selectedImageEl);
         playerClickedImageEl.attr("src",data.cards[0].image)
@@ -127,24 +130,30 @@ function loadCardToPlayerPanel(data,selectedImageEl){
         computerImageEl.attr("cardValue",data.cards[1].value);
     }
     
+
+    //Every card , checkWinner will compare card suit and check for winner.
+    //Draw between Computer and player.
     if((checkWinner("player") && checkWinner("computer")))
     {
         $(".image").prop("disabled",true);
         loadLooserDiv(playerNameGlobalVar,true,"draw");
         updatePlayersResultToLocalStorage(playerNameGlobalVar,"draw",false);
     }
+    //Player Won
     else if(checkWinner("player"))
     {
         $(".image").prop("disabled",true);
         loadWinnerDiv(playerNameGlobalVar);
         updatePlayersResultToLocalStorage(playerNameGlobalVar,"win",true);
     }
+    //Computer Won
     else if(checkWinner("computer"))
     {
         $(".image").prop("disabled",true);
         loadLooserDiv(playerNameGlobalVar,false,"loose");
         updatePlayersResultToLocalStorage(playerNameGlobalVar,"loose",false);
     }
+    //Stalemate will check for both and none get 3 same suit than its stalemate condition.
     if(checkForStalemate("player","computer"))
     {
         $(".image").prop("disabled",true);
@@ -154,6 +163,8 @@ function loadCardToPlayerPanel(data,selectedImageEl){
 
 }
 
+
+//Check winner get all loaded card and count for same suits. if >=3 than winner and return true.
 function checkWinner(checkWinnerFor){
     var imageControls = $( "#"+checkWinnerFor + "Div").find( "[imageFound=true]"  );
     if(imageControls && imageControls.length > 2 ){
@@ -193,6 +204,9 @@ function checkForStalemate(playerDiv, computerDiv){
         return false;
     }
 }
+
+
+//If user won, Load Winner div with gift gif images.
 function loadWinnerDiv(winner){
     $(".result").remove();
     
@@ -221,6 +235,7 @@ function loadWinnerDiv(winner){
     $("#main").append(winnerDivEl);
 }
 
+//Load div incase of loose / draw or stalemate status.
 function loadLooserDiv(looser,isGameDraw,gameResult){
     $(".result").remove();
     var looserDivEl = $("<div>").addClass("result middle aligned three wide column");
@@ -255,21 +270,31 @@ function loadLooserDiv(looser,isGameDraw,gameResult){
     $("#main").append(looserDivEl);
 }
 
+//Next Round Button Click
 $(document).on("click","#nextRoundButtonClick",function(event){ 
     gameRounds++;
     generateGameCanvas();
 });
 
+//Player information model will take name of player and store to localstorage.
+$('.ui.form').submit(function(e){ 
+    e.preventDefault(); //usually use this, but below works best here.
+    storePlayersInfoToLocalStorage();
+});
+
 /***************START LOCALSTORAGE FUNCTIONS **************/
 //Store Players information with initial values of game.
 function storePlayersInfoToLocalStorage(){
-        var playerName = $("#playerName").val().trim();
-        playerNameGlobalVar = playerName;
-        $("#playerDivHeadingEl").text(playerName);
-        
-        var playersList = JSON.parse(localStorage.getItem("playersList")) || [];
-        var isPlayerExist = false;
+    //Reading form field.
+    
+        var playerName = $('.ui.form').form('get field', "playerName").val().trim(); 
         if(playerName!=""){
+            $('#playerName-modal').modal('hide');
+            playerNameGlobalVar = playerName;
+            $("#playerDivHeadingEl").text(playerName);
+            
+            var playersList = JSON.parse(localStorage.getItem("playersList")) || [];
+            var isPlayerExist = false;
             for(var i=0;i<playersList.length;i++)
             {
                 var playerDetail = playersList[i];
@@ -310,16 +335,20 @@ function updatePlayersResultToLocalStorage(playerName,gameResult,isWon){
             }      
             localStorage.setItem('playersList',JSON.stringify(playersList));
         }
+       
 }
 //Final Result panel - Used Cards to show current player details.
 function finalResultAfterGameComplete(){
     var finalResultIUICardDiv = $("<div>").addClass("ui cards");
+    var scoreboardButtonEl = $("<button>").attr("id","showScoreButton").addClass("ui button green");
+    scoreboardButtonEl.text("Players Statisctics");
+ 
     var cardDivEl =  $("<div>").addClass("card");
     var cardContentDivEl =  $("<div>").addClass("content");
     var cardHeaderDivEl =  $("<div>").addClass("header");
     var cardDescriptionDivEl =  $("<div>").addClass("description");
 
-    var playersList = JSON.parse(localStorage.getItem("playersList"));
+    var playersList = JSON.parse(localStorage.getItem("playersList")) || [];
 
     if(playerNameGlobalVar!=""){
             for(var i=0;i<playersList.length;i++)
@@ -327,8 +356,7 @@ function finalResultAfterGameComplete(){
                 var playerDetail = playersList[i];
                 if(playerNameGlobalVar === playerDetail.name){
                     cardHeaderDivEl.text(playerNameGlobalVar);
-                    cardDescriptionDivEl.html("<p> Total Games : " + playerDetail.game + "</p><p> Total Win : " + playerDetail.win + "</p><p> Total Loose : " + playerDetail.loose + "</p>")
-                    
+                    cardDescriptionDivEl.html("<p> Total Games : " + playerDetail.game + "</p><p> Total Win : " + playerDetail.win + "</p><p> Total Loose : " + playerDetail.loose + "</p>")   
                     cardContentDivEl.append(cardHeaderDivEl);
                     cardContentDivEl.append(cardDescriptionDivEl)
                     cardDivEl.append(cardContentDivEl);
@@ -337,7 +365,10 @@ function finalResultAfterGameComplete(){
             }
         }
         finalResultIUICardDiv.append(cardDivEl);
+      //  $("#main").append(scoreboardButtonEl);
+        finalResultIUICardDiv.append(scoreboardButtonEl);
         $("#main").append(finalResultIUICardDiv);
+        
 }
 /***************STOP LOCALSTORAGE FUNCTIONS **************/
 $('#gameRules').on("click", function(event) {
@@ -345,6 +376,7 @@ $('#gameRules').on("click", function(event) {
     $('#playGameModal').on("click", ruleButton_Click);
 });
 
+//Rule Button Click, if player info is not added than Player popup will get populated after Rule
 function ruleButton_Click(){
     if(playerNameGlobalVar===""){
         playGameMenuItemClick();
@@ -353,3 +385,83 @@ function ruleButton_Click(){
         $('#rules-modal').modal('hide');
     }
 }
+
+//Show all users statistics data which contain sortable table. Semantic tableSort.js added and modified to sort number value.
+$(document).on("click","#showScoreButton",showAllUsersResults);
+function showAllUsersResults(){
+    $("#main").html('');
+    var allPlayersDetailDiv = $('<div>');
+
+    var finalResultIUITable = $("<table>").addClass("ui sortable celled table");
+    var playersList = JSON.parse(localStorage.getItem("playersList")) || [];
+
+            var theadEl =  $("<thead>");
+            var theadElHtml = "<tr><th>Name</th><th>Total Game Count</th><th>Win count</th><th>Lost Count</th></tr>";
+            theadEl.html(theadElHtml);
+            var tableBodyEl =  $("<tbody>");
+           
+            for(var i=0;i<playersList.length;i++)
+            {
+                var playerDetail = playersList[i];
+    
+                    var tableRowEl =  $("<tr>");
+                    var nameColumnEl =  $("<td>");
+                    var totalGameColumnEl =  $("<td>");
+                    var totalWinColumnEl =  $("<td>");
+                    var totalLostColumnEl =  $("<td>");
+
+                    nameColumnEl.text(playerDetail.name);
+                    totalGameColumnEl.text( playerDetail.game);
+                    totalWinColumnEl.text(playerDetail.win);
+                    totalLostColumnEl.text(playerDetail.loose);
+
+                    tableRowEl.append(nameColumnEl);
+                    tableRowEl.append(totalGameColumnEl);
+                    tableRowEl.append(totalWinColumnEl);
+                    tableRowEl.append(totalLostColumnEl);
+
+                    tableBodyEl.append(tableRowEl);
+                
+            }
+        
+            finalResultIUITable.append(theadEl);
+            finalResultIUITable.append(tableBodyEl);
+      
+            allPlayersDetailDiv.append(finalResultIUITable);
+
+            //Bak to game button, so Player need not to enter again their name.
+            var backToGameBtnEl = $("<button>").attr("id","backToGame").addClass("ui button green");
+            backToGameBtnEl.text("Back To Game");
+            allPlayersDetailDiv.append(backToGameBtnEl);
+
+        $("#main").append(allPlayersDetailDiv);
+        $("#main").append(allPlayersDetailDiv);
+        $('table').tablesort();
+}   
+//Back to Game, will start from first round and create game canvas.
+$(document).on("click","#backToGame",function(event){
+    gameRounds=0;
+    generateGameCanvas();
+});
+
+//Player Info Model form.
+$(document).ready(function(){
+    $('.ui.form')
+    .form({ 
+        fields: {
+        playerName: {
+            identifier: 'playerName',
+            rules: 
+            [
+            {
+                type   : 'empty',
+                prompt : 'Please enter your name'
+            }
+            ]
+        }
+        }
+    })
+  });
+
+
+  

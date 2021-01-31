@@ -33,8 +33,14 @@
 
   
   <main id="main" class="ui centered grid" > 
-  
+    <div class="ui container">
+      <ol id = "highScores" class = "ui three stackable cards list">
+        <li id="high1"></li>
+        <li id="high2"></li>
+        <li id="high3"></li>
+      </ol>
   </main>
+
 
   <!-- Modal -->
   <div class="ui small modal" id="rules-modal">
@@ -63,18 +69,21 @@
       <h2 id="player-modal">Three's A Crowd!</h2>
     </div>
     <div class="content">
-          <h3>Enter Your Name</h3>
-          <div class="ui input">
-            <input type="text" id="playerName" placeholder="Player's Name"/>
+        <form class="ui form segment">
+          <div class="field required">
+            <label>Enter Your Name</label>
+            <input placeholder="First Name" name="playerName"" type="text">
           </div>
-    </div>
-    <div class="actions">
-      <button type="button" class="ui approve button" id="goModalButtonEl">Go!</button>
+          <div class="ui primary submit button" id="goModalButtonEl">Submit</div>
+          <div class="ui error message"></div>
+        </form>
     </div>
 </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="./assets/js/game.js"></script>
+  <!-- Added for Semantic table sort and also modified sorting method so if value is interger it get sort properly -->
+  <script src="./assets/js/tablesort.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous"></script>
   
   
