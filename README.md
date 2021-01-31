@@ -4,7 +4,7 @@ We've created a game in where the player is to acquire three cards of either mat
 
 # Tools
 
-In order to create our MVP, we've put our knowledge of HTML, CSS, and javascript to great us, with some JQuery thrown in where applicable. We've chosen Semantic UI as our CSS framework and after extensive research have implemented it throughout. 
+In order to create our MVP, we've put our knowledge of HTML, CSS, and Jquery to great us. We've chosen Semantic UI as our CSS framework and after extensive research have implemented it throughout.
 
 It is uploaded in GitHub. 
 
@@ -15,7 +15,7 @@ HTTPS : https://github.com/bhumisha/ThreesCrowd.git
 
 Project Source code : https://github.com/bhumisha/ThreesCrowd
 
-You can view portfolio using below link
+You can play the game using below link
 https://bhumisha.github.io/ThreesCrowd/
 
 # Screenshots
