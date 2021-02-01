@@ -2,6 +2,11 @@ body {
     background-image: url("../images/feltTabletop.png");
 }
 
+
+#main{
+    margin-top: 150px;
+    display: flex;
+   }
 #cards-right, #cards-left {
     display:flex;
     flex: 1;
@@ -52,11 +57,6 @@ div{
     transition: all .3s ease-in-out;
 }
 
-#main{
- margin-top: 150px;
- display: flex;
-}
-
 .image {
     background-image: url("../images/cardBack.png");
     background-size: cover;
@@ -68,8 +68,15 @@ div{
     cursor: pointer;
    
 }
+.ui .cards{
+    display: block;
+   
+}
 
-
+.ui.cards>.card {
+    border-radius: 10px;
+    background-color: antiquewhite;
+}
 .result{
     display: flow-root;
     border: solid;
@@ -79,7 +86,10 @@ div{
     margin: 15px;
     height:auto
 }
- 
-.winImage{
-    src: url("https://s3.amazonaws.com/course_creation_production/v2_yes_no_quiz_questions/follow_up_images/000/002/084/original/Owl1.gif?1436567941");
+.ui.table{
+    padding: 0;
+    border-radius: 10px;
+}
+.ui.celled.table tr th{
+    background-color: antiquewhite;
 }
