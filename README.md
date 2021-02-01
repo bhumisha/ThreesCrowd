@@ -4,7 +4,7 @@ We've created a game in where the player is to acquire three cards of either mat
 
 # Tools
 
-In order to create our MVP, we've put our knowledge of HTML, CSS, and Jquery to great us. We've chosen Semantic UI as our CSS framework and after extensive research have implemented it throughout.
+In order to create our MVP, we've put our knowledge of HTML, CSS, and Jquery to great us. We've chosen Semantic UI as our CSS framework and after extensive research have implemented it throughout. We have used https://deckofcardsapi.com/ to get shuffle and draw two card on each card click.
 
 It is uploaded in GitHub. 
 
